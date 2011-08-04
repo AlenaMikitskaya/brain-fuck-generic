@@ -32,12 +32,13 @@ public class BFInterpreter {
     private int[] openingBrakets;
     private char[] source;
     private int sourcePointer;
+
     /**
      * Hold memory position
      */
     private int pointer;
     private byte[] cells;
-
+    
     private char[] output;
     private int nextOutput;
     private int nextUnreadedOutput;
@@ -165,13 +166,47 @@ public class BFInterpreter {
     }
 
     /**
-     * Start(or continue, if it was interrupted for input) to interpret program.
+     * Interpret one step of program.(Usefull in debug - smth like F7).
+     * @throws if source was not setted or program already ended.
+     * @return true - if program is waiting for input(and after entry the input
+     *         data, you must call interpret() again), false - if program ready
+     *         to continue execution.
+     */
+    public boolean interpretOneStep() throws Exception {
+        int result = interpretUpTo(sourcePointer);
+        if (result == source.length) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Start(or continue, if it was interrupted for input) to interpret program
+     * up to end or up to next input, if we will need more input.
      * @throws if source was not setted or program already ended.
      * @return true - if program is waiting for input(and after entry the input
      *         data, you must call interpret() again), false - if program ended.
      */
     public boolean interpret() throws Exception {
-        while (sourcePointer < source.length) {
+        int result = interpretUpTo(source.length - 1);
+        if (result == source.length) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Start(or continue, if it was interrupted for input) to interpret program
+     * up to choosed symbol.
+     * @throws if source was not setted or program already ended.
+     * @return index. If index == lastCommand + 1, then program interpreted up
+     *         to choosed index. If index <= lastCommand, then program need more
+     *         input.
+     */
+    public int interpretUpTo(int lastCommand) throws Exception {
+        while (sourcePointer <= lastCommand) {
             switch (source[sourcePointer]) {
                 case '+': {
                     incrementValue();
@@ -199,7 +234,7 @@ public class BFInterpreter {
                 }
                 case ',': {
                     if (input()) {
-                        return true;
+                        return sourcePointer;
                     }
                     break;
                 }
@@ -209,7 +244,7 @@ public class BFInterpreter {
                 }
             }
         }
-        return false;
+        return sourcePointer;
     }
 
     private void incrementPointer() {
