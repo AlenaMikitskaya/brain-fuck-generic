@@ -35,7 +35,6 @@ public class BFInterpreter {
     /**
      * Hold memory position
      */
-
     private int pointer;
     private byte[] cells;
 
