@@ -5,9 +5,9 @@ import java.util.Arrays;
  */
 
 /**
- * Class allows to interpret BrainFuck source with run-time input and output
- * quite fast. ~O(n) where n - count of steps throw source.And constants also
- * quite small ;-).
+ * Class allows to interpret(or debug-interpret step-by-step) BrainFuck source
+ * with run-time input and output quite fast. ~O(n) where n - count of steps
+ * throw source.And constants also quite small ;-).
  *
  * At first call constructor, then prepare new program(call prepareNewProgram(Source))
  * and by using interpret and addInput(if program need input-then interpret will
