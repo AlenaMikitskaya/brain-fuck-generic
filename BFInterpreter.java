@@ -1,4 +1,3 @@
-
 import java.util.Arrays;
 
 /* Written on Java SE 1.6.0 in NetBeans IDE 6.9.1 in august 2011, SPb, Russia.
@@ -19,9 +18,10 @@ import java.util.Arrays;
  */
 public class BFInterpreter {
 
-    private final int cellsCount;
-    private final int outputMaxSize;
-    private final int inputMaxSize;
+    private final int CELLS_COUNT;
+    private final int OUTPUT_MAX_SIZE;
+    private final int INPUT_MAX_SIZE;
+
     /**
      * Hold index of closing brake corresponding to i-opening braket
      */
@@ -35,33 +35,36 @@ public class BFInterpreter {
     /**
      * Hold memory position
      */
+
     private int pointer;
     private byte[] cells;
+
     private char[] output;
     private int nextOutput;
     private int nextUnreadedOutput;
+
     private char[] input;
     private int nextInput;
     private int nextUnreadedInput;
 
     public BFInterpreter() {
-        cellsCount = 32768;
-        outputMaxSize = 32768;
-        inputMaxSize = 32768;
+        CELLS_COUNT = 32768;
+        OUTPUT_MAX_SIZE = 32768;
+        INPUT_MAX_SIZE = 32768;
         initMemory();
     }
 
     public BFInterpreter(int cellsCount, int outputMaxSize, int inputMaxSize) {
-        this.cellsCount = cellsCount;
-        this.outputMaxSize = outputMaxSize;
-        this.inputMaxSize = inputMaxSize;
+        this.CELLS_COUNT = cellsCount;
+        this.OUTPUT_MAX_SIZE = outputMaxSize;
+        this.INPUT_MAX_SIZE = inputMaxSize;
         initMemory();
     }
 
     private void initMemory() {
-        cells = new byte[cellsCount];
-        output = new char[outputMaxSize];
-        input = new char[inputMaxSize];
+        cells = new byte[CELLS_COUNT];
+        output = new char[OUTPUT_MAX_SIZE];
+        input = new char[INPUT_MAX_SIZE];
     }
 
     /**
@@ -211,12 +214,12 @@ public class BFInterpreter {
     }
 
     private void incrementPointer() {
-        pointer = (pointer + 1) % cellsCount;
+        pointer = (pointer + 1) % CELLS_COUNT;
         sourcePointer++;
     }
 
     private void decrementPointer() {
-        pointer = (pointer - 1 + cellsCount) % cellsCount;
+        pointer = (pointer - 1 + CELLS_COUNT) % CELLS_COUNT;
         sourcePointer++;
     }
 
